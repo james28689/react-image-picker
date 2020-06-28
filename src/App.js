@@ -12,6 +12,7 @@ class App extends React.Component {
     super();
     this.state = {
       searchTerm: "",
+      resultNo: 20,
       results: [],
       images: [],
     };
@@ -21,13 +22,17 @@ class App extends React.Component {
     this.setState({ searchTerm: event.target.value });
   }
 
+  handleNumChange(event) {
+    this.setState({ resultNo: event.target.value });
+  }
+
   formSubmitted(event) {
     event.preventDefault();
 
     this.setState({ images: [] });
 
     unsplash.search
-      .photos(this.state.searchTerm, 1, 20)
+      .photos(this.state.searchTerm, 1, this.state.resultNo)
       .then(toJson)
       .then((result) => {
         console.log(result);
@@ -50,6 +55,17 @@ class App extends React.Component {
             id="searchTerm"
             name="searchTerm"
           />
+          <label htmlFor="resultNo">Number of Results (1-30)</label>
+          <input
+            onChange={(event) => this.handleNumChange(event)}
+            value={this.state.resultNo}
+            type="number"
+            id="resultNo"
+            name="resultNo"
+            min="1"
+            max="30"
+          />
+          <br />
           <button type="submit">Search</button>
         </form>
 

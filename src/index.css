@@ -7,6 +7,12 @@ body {
   column-count: 3;
 }
 
+@media (max-width: 750px) {
+  .images {
+    column-count: 1;
+  }
+}
+
 img {
   width: 100%;
 }
